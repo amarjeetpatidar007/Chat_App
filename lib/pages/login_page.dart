@@ -1,4 +1,8 @@
+import 'package:app_provider/models/user_model.dart';
+import 'package:app_provider/pages/complete_profile.dart';
 import 'package:app_provider/pages/signup_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +14,41 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  void checkValues(){
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+
+    if(email.isEmpty || password.isEmpty){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please fill all fields')));
+    }
+    else{
+      signIn(email,password);
+    }
+  }
+
+  void signIn(String email, String password) async{
+    UserCredential? credential;
+
+    try{
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+    }on FirebaseAuthException catch(error){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.message.toString(),),duration: const Duration(seconds: 5),));
+    }
+
+    if(credential != null){
+      String uid = credential.user!.uid;
+
+      DocumentSnapshot userData = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      UserModel userModel = UserModel.fromMap(
+        userData.data() as Map<String,dynamic>);
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -27,19 +66,29 @@ class _LoginPageState extends State<LoginPage> {
                     "Login Page",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: screenHeight * 0.1,),
-                  const TextField(
-                    decoration: InputDecoration(labelText: "Enter Email"),
+                  SizedBox(height: screenHeight * 0.05,),
+                  TextField(
+                    controller: emailController,
+                    decoration: const InputDecoration(labelText: "Enter Email"),
                   ),
-                  SizedBox(height: screenHeight * 0.1,),
-                  const TextField(
+                  SizedBox(height: screenHeight * 0.05,),
+                  TextField(
+                    controller: passwordController,
                     obscureText: true,
-                    decoration: InputDecoration(labelText: "Enter Password"),
+                    decoration: const InputDecoration(labelText: "Enter Password"),
                   ),
-                  SizedBox(height: screenHeight * 0.1,),
+                  SizedBox(height: screenHeight * 0.05,),
                   CupertinoButton(
                     color: Theme.of(context).colorScheme.secondary,
-                    onPressed: () {  },
+                    onPressed: () {
+                      checkValues();
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context ) => const CompleteProfile()
+                      //   )
+                      // );
+                    },
                     child: const Text("Log In"),
                   )
                 ],
