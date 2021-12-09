@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
+
 class CompleteProfile extends StatefulWidget {
   const CompleteProfile({Key? key}) : super(key: key);
 
@@ -12,6 +13,8 @@ class CompleteProfile extends StatefulWidget {
 class _CompleteProfileState extends State<CompleteProfile> {
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -40,6 +43,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                   labelText: 'Full Name',
                 ),
               ),
+              SizedBox(height: screenHeight * 0.1),
               CupertinoButton(
                 color: Theme.of(context).colorScheme.secondary,
                 onPressed: () {
