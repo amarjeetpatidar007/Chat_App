@@ -1,5 +1,6 @@
 import 'package:app_provider/models/user_model.dart';
 import 'package:app_provider/pages/complete_profile.dart';
+import 'package:app_provider/pages/homepage.dart';
 import 'package:app_provider/pages/signup_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
     UserCredential? credential;
 
     try{
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      credential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
     }on FirebaseAuthException catch(error){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.message.toString(),),duration: const Duration(seconds: 5),));
     }
@@ -44,7 +45,11 @@ class _LoginPageState extends State<LoginPage> {
 
       DocumentSnapshot userData = await FirebaseFirestore.instance.collection('users').doc(uid).get();
       UserModel userModel = UserModel.fromMap(
-        userData.data() as Map<String,dynamic>);
+        userData.data() as Map<String, dynamic>);
+
+      Navigator.push(context, MaterialPageRoute(builder: (context){
+        return HomePage(userModel: userModel, firebaseUser: credential!.user!);
+      }));
 
     }
   }
@@ -82,13 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Theme.of(context).colorScheme.secondary,
                     onPressed: () {
                       checkValues();
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context ) => const CompleteProfile()
-                      //   )
-                      // );
-                    },
+                      },
                     child: const Text("Log In"),
                   )
                 ],
