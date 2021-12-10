@@ -1,4 +1,5 @@
 import 'package:app_provider/models/user_model.dart';
+import 'package:app_provider/pages/complete_profile.dart';
 import 'package:app_provider/pages/login_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -55,8 +56,14 @@ class _SignUpState extends State<SignUp> {
           .collection('users')
           .doc(uid)
           .set(newUser.toMap())
-          .then((value) => ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("New User Created!"))));
+          .then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("New User Created!")));
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return CompleteProfile(
+              userModel: newUser, firebaseUser: credential!.user!);
+        }));
+      });
     }
   }
 
