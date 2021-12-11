@@ -1,4 +1,5 @@
 import 'package:app_provider/models/user_model.dart';
+import 'package:app_provider/pages/search_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,16 @@ class _HomePageState extends State<HomePage> {
       ),
       body: const Center(
         child: Text('Chat Application Firebase'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context){
+              return const SearchPage();
+            }
+          ));
+        },
+        child: const Icon(Icons.search),
       ),
     );
   }
