@@ -1,20 +1,23 @@
 
 class ChatRoomModel{
   String? chatRoomId;
-  List<String>? participants;
+  Map<String, dynamic>? participants;
+  String? lastMessage;
 
-  ChatRoomModel(this.chatRoomId,this.participants);
+  ChatRoomModel({this.chatRoomId,this.participants,this.lastMessage});
 
   ChatRoomModel.fromMap(Map<String, dynamic> map){
     chatRoomId = map['chatRoomId'];
     participants = map['participants'];
+    lastMessage = map['lastMessage'];
 
   }
 
   Map<String, dynamic> toMap(){
     return {
       'chatRoomId': chatRoomId,
-      'participants': participants
+      'participants': participants,
+      'lastMessage' : lastMessage
     };
   }
 }
