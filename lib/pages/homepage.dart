@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context){
-              return const SearchPage();
+              return SearchPage(firebaseUser: widget.firebaseUser, userModel: widget.userModel);
             }
           ));
         },
