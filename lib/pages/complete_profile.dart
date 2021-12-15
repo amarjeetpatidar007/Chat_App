@@ -13,7 +13,8 @@ import 'package:image_picker/image_picker.dart';
 class CompleteProfile extends StatefulWidget {
   final UserModel userModel;
   final User firebaseUser;
-  const CompleteProfile({Key? key, required this.userModel, required this.firebaseUser})
+  const CompleteProfile(
+      {Key? key, required this.userModel, required this.firebaseUser})
       : super(key: key);
 
   @override
@@ -66,10 +67,17 @@ class _CompleteProfileState extends State<CompleteProfile> {
     widget.userModel.fullName = fullName;
     widget.userModel.profilepic = imageURL;
 
-    await FirebaseFirestore.instance.collection('users').doc(widget.userModel.uid).set(widget.userModel.toMap()).then((value) => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Data Uploaded Successfully!'))));
-
-    await Navigator.push(context, MaterialPageRoute(builder: (context){
-      return HomePage(userModel: widget.userModel, firebaseUser: widget.firebaseUser);
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.userModel.uid)
+        .set(widget.userModel.toMap())
+        .then((value) => ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Data Uploaded Successfully!'))));
+    Navigator.popUntil(context, (route) => route.isFirst);
+    await Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) {
+      return HomePage(
+          userModel: widget.userModel, firebaseUser: widget.firebaseUser);
     }));
   }
 
