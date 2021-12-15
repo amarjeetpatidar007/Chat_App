@@ -1,3 +1,4 @@
+import 'package:app_provider/models/ui_helper.dart';
 import 'package:app_provider/models/user_model.dart';
 import 'package:app_provider/pages/complete_profile.dart';
 import 'package:app_provider/pages/homepage.dart';
@@ -32,11 +33,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void signIn(String email, String password) async{
+    UIHelper.showLoadingDialog("Loading ...", context);
     UserCredential? credential;
 
     try{
       credential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
     }on FirebaseAuthException catch(error){
+      Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.message.toString(),),duration: const Duration(seconds: 5),));
     }
 
@@ -56,7 +59,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.width;
 
     return Scaffold(

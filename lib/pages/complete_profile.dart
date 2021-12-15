@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_provider/models/ui_helper.dart';
 import 'package:app_provider/models/user_model.dart';
 import 'package:app_provider/pages/homepage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -55,6 +56,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
   }
 
   void uploadData() async {
+    UIHelper.showLoadingDialog("Uploading Image...", context);
     UploadTask uploadTask = FirebaseStorage.instance
         .ref('profilepictures')
         .child(widget.userModel.uid.toString())
