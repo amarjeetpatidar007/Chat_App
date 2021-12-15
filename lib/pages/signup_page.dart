@@ -1,3 +1,4 @@
+import 'package:app_provider/models/ui_helper.dart';
 import 'package:app_provider/models/user_model.dart';
 import 'package:app_provider/pages/complete_profile.dart';
 import 'package:app_provider/pages/login_page.dart';
@@ -38,11 +39,13 @@ class _SignUpState extends State<SignUp> {
   }
 
   void signUp(String email, String password) async {
+    UIHelper.showLoadingDialog("Creating New Account...", context);
     UserCredential? credential;
     try {
       credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (error) {
+      Navigator.pop(context);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(error.message.toString())));
     }
