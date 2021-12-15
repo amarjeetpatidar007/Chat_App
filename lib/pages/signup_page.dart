@@ -59,7 +59,8 @@ class _SignUpState extends State<SignUp> {
           .then((value) {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("New User Created!")));
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
+        Navigator.popUntil(context, (route) => route.isFirst);
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
           return CompleteProfile(
               userModel: newUser, firebaseUser: credential!.user!);
         }));

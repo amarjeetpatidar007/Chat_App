@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
       UserModel userModel = UserModel.fromMap(
         userData.data() as Map<String, dynamic>);
 
-      Navigator.push(context, MaterialPageRoute(builder: (context){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
         return HomePage(userModel: userModel, firebaseUser: credential!.user!);
       }));
 
