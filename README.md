@@ -1,16 +1,13 @@
-# app_provider
+# Flutter Chat App with Firebase
 
-A new Flutter project.
+Firebase Features Used: Firestore Database and Firebase Storage for storing Images
 
-## Getting Started
+Screenshots:
+<br>
+<img src="https://user-images.githubusercontent.com/81079724/146946527-68988317-4597-444b-b9c3-b74ae0c051e7.jpeg" width="340" height="620">
+<img src="https://user-images.githubusercontent.com/81079724/146946535-477c0ec6-7db0-49e7-acda-d6acbae4abb5.jpeg" width="340" height="620">
+<img src="https://user-images.githubusercontent.com/81079724/146946539-67f8cb33-954f-44f9-b91c-26fa38061b54.jpeg" width="340" height="620">
+<img src="https://user-images.githubusercontent.com/81079724/146946544-3dd6e9d1-ed5e-46c9-9bd9-8ae7056b588f.jpeg" width="340" height="620">
+<img src="https://user-images.githubusercontent.com/81079724/146946550-807a770a-5199-444c-b174-239ff1c2e8f1.jpeg" width="340" height="620">
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
